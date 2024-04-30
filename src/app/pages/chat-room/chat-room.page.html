@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="/select-room"></ion-back-button>
+    <ion-title>
+     {{user}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+
+      <ion-col size="9" *ngIf="message.sender !== sendi" class="message"
+               [ngClass]="{
+                 'my_message': message.sender === sendi,
+                 'other_message': message.sender !== sendi
+                }">
+        <span class="user_name">{{ message.sender }}:</span><br>
+        <span>{{ message.text }}</span>
+        
+      </ion-col>
+
+      <ion-col offset="3" size="9" *ngIf="message.sender === sendi" class="message"
+               [ngClass]="{
+                 'my_message': message.sender === sendi,
+                 'other_message': message.sender !== sendi
+               }">
+        <span class="user_name">{{ message.sender }}:</span><br>
+        <span>{{ message.text }}</span>
+        
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-input type="text" placeholder="Message..." [(ngModel)]="message" #ngModel
+               (keydown)="startTyping()" (keyup)="stopTyping()">
+    </ion-input>
+    <ion-button fill="clear" color="primary" slot="end" (click)="sendMessage()" [disabled]="!message" size="large">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>
